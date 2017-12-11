@@ -1,10 +1,12 @@
 var pg = require('pg');
 
 var m_connection = Symbol('connection');
+var m_transaction = Symbol('transaction');
 
 class PostgreSQL {
     constructor(connection) {
         this[m_connection] = connection;
+        this[m_transaction] = false;
     }
 
     query(sql) {
@@ -36,6 +38,65 @@ class PostgreSQL {
                     resolve();
                 }
             });
+        });
+    }
+
+    isTransactionSupported() {
+        return true;
+    }
+
+    inTransaction() {
+        return this[m_transaction];
+    }
+
+    beginTransaction() {
+        var self = this;
+        if (this.inTransaction() == true) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('BEGIN')
+            .then(() => {
+                self[m_transaction] = true;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    }
+
+    commit() {
+        var self = this;
+        if (this.inTransaction() == false) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('COMMIT')
+            .then(() => {
+                self[m_transaction] = false;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            })
+        });
+    }
+
+    rollback() {
+        var self = this;
+        if (this.inTransaction() == false) {
+            return Promise.resolve(false);
+        }
+        return new Promise((resolve, reject) => {
+            this.execute('ROLLBACK')
+            .then(() => {
+                self[m_transaction] = false;
+                resolve(true);
+            })
+            .catch(error => {
+                reject(error);
+            })
         });
     }
 }
