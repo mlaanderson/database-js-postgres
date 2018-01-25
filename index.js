@@ -9,6 +9,11 @@ class PostgreSQL {
         this[m_transaction] = false;
     }
 
+    /**
+     * Queries the database
+     * @param {string} sql 
+     * @returns {Promise<Array<any>>}
+     */
     query(sql) {
         var self = this;
         return new Promise((resolve, reject) => {
@@ -24,10 +29,19 @@ class PostgreSQL {
         });
     }
 
+    /**
+     * Executes the sql on the database
+     * @param {string} sql 
+     * @returns {Promise<Array<any>>}
+     */
     execute(sql) {
         return this.query(sql);
     }
 
+    /**
+     * Closes the database
+     * @returns {Promise}
+     */
     close() {
         var self = this;
         return new Promise((resolve, reject) => {
@@ -102,8 +116,9 @@ class PostgreSQL {
 }
 
 /**
- * 
+ * Opens a connection
  * @param {{Hostname: string, Port: number, Username: string, Password: string, Database: string}} connection 
+ * @returns {PostgreSQL}
  */
 function OpenConnection(connection) {
     let base = new pg.Client({

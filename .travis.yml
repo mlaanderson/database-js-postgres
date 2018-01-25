@@ -3,3 +3,6 @@ node_js:
   - "8"
   - "7"
   - "6"
+services: postgresql
+before_script:
+  - psql -c 'create database test;' -U postgres
