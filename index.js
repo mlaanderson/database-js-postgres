@@ -101,6 +101,10 @@ class PostgreSQL {
     }
 }
 
+/**
+ * 
+ * @param {{Hostname: string, Port: number, Username: string, Password: string, Database: string}} connection 
+ */
 function OpenConnection(connection) {
     let base = new pg.Client({
         host: connection.Hostname || 'localhost',
