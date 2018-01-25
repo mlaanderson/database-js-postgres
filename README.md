@@ -1,4 +1,7 @@
 # database-js-postgres
+
+[![Build Status](https://travis-ci.org/mlaanderson/database-js-postgres.svg?branch=master)](https://travis-ci.org/mlaanderson/database-js-postgres)
+
 Database-js wrapper for PostgreSQL
 ## About
 Database-js-mysql is a wrapper around the [node-postgres](https://github.com/brianc/node-postgres) package by Brian Carlson. It is intended to be used with the [database-js](https://github.com/mlaanderson/database-js) package. However it can also be used in stand alone mode. The only reason to do that would be to use [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
