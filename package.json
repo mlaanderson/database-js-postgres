@@ -22,5 +22,8 @@
   "homepage": "https://github.com/mlaanderson/database-js-postgres#readme",
   "dependencies": {
     "pg": "^7.0.2"
+  },
+  "devDependencies": {
+    "database-js": "^3.0.2"
   }
 }
